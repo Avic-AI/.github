@@ -5,7 +5,7 @@ AI tooling, local-model infrastructure and experiments from [@Avicennasis](https
 ### Public repositories
 
 <!-- public-repos:start -->
-_No public repositories yet._
+_stale list (workflow test)_
 <!-- public-repos:end -->
 
 <sub>This list is generated daily from the org's public repositories.</sub>
