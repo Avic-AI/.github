@@ -1,0 +1,33 @@
+name: profile-repos
+
+# Keeps the public-repo list on the org landing page current. Lists public
+# repositories only (see .github/scripts/update_profile_repos.py).
+on:
+  schedule:
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: profile-repos
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Rewrite the public-repo list
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ORG: ${{ github.repository_owner }}
+        run: python3 .github/scripts/update_profile_repos.py
+      - name: Commit if it changed
+        run: |
+          if git diff --quiet -- profile/README.md; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "profile: refresh public repo list" -- profile/README.md
+          git push
