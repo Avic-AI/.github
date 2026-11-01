@@ -1,2 +1,5 @@
 # Feature Factory / stargazer context (local-only, never commit)
 .stargazer-*
+
+# Python bytecode (from running .github/scripts locally)
+__pycache__/
